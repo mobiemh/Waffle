@@ -1,0 +1,13 @@
+spring:
+  jpa:
+    database: mysql
+    hibernate:      ddl-auto: create-drop
+    show-sql: true
+  datasource:
+    url: jdbc:mysql://localhost:3306/waffle?useSSL=false&&allowPublicKeyRetrieval=true&characterEncodig=UTF-8    username: root
+    password: hellowaffle6
+server:  error:
+    include-exception: false
+    include-stacktrace: never
+    path: '/error'    whitelabel:      enabled: false
+    
