@@ -4,6 +4,8 @@ import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.messaging.handler.annotation.MessageMapping;
+import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -31,14 +33,23 @@ public class JobController {
 		job.name = jobDto.getName() + new Date().getTime();
 		jobService.addJob(job);
 	}
-	
+
 	@GetMapping
 	public List<WaffleJob> list() {
 		return jobService.list();
 	}
 	
 	@DeleteMapping
-	public void delete(@RequestParam int[] jobId) {
+//	@SendTo("/topic")
+	public int[] delete(@RequestBody int[] jobId) {
 		jobService.delete(jobId);
+		return jobId;
+	}
+
+//	@GetMapping("/test")
+	@MessageMapping("/ws")
+	@SendTo("/topic/test")
+	public int[] test(int[] jobId) {
+		return jobId;
 	}
 }
